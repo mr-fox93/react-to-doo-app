@@ -1,10 +1,21 @@
 import "./styles.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const App = () => {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState("");
   const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    const x = localStorage.getItem("tasks");
+    const y = localStorage.getItem("count");
+    if (x) {
+      setTasks(JSON.parse(x));
+    }
+    if (y) {
+      setCount(JSON.parse(y));
+    }
+  }, []);
 
   return (
     <div className="App">
@@ -32,9 +43,19 @@ const App = () => {
       <button
         onClick={() => {
           setTasks([]);
+          setCount(0);
         }}
       >
         Clear All
+      </button>
+      <button
+        className="save"
+        onClick={() => {
+          localStorage.setItem("tasks", JSON.stringify(tasks));
+          localStorage.setItem("count", JSON.stringify(count));
+        }}
+      >
+        Save to locale storage
       </button>
       <span>counter: {count}</span>
       <ul>
