@@ -1,25 +1,72 @@
-import logo from './logo.svg';
-import './App.css';
+import "./styles.css";
+import React, { useState } from "react";
 
-function App() {
+const App = () => {
+  const [tasks, setTasks] = useState([]);
+  const [newTask, setNewTask] = useState("");
+  const [count, setCount] = useState(0);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <input
+        type={"text"}
+        placeholder={"add new task..."}
+        value={newTask}
+        onChange={(event) => setNewTask(event.target.value)}
+        onKeyDown={(event) => {
+          if (event.key === "Enter") {
+            setTasks([...tasks, newTask], setNewTask(""));
+            setCount(count + 1);
+          }
+        }}
+      />
+      <button
+        onClick={() => {
+          setTasks([...tasks, newTask], setNewTask(""));
+          setCount(count + 1);
+        }}
+      >
+        {" "}
+        ➕{" "}
+      </button>
+      <button
+        onClick={() => {
+          setTasks([]);
+        }}
+      >
+        Clear All
+      </button>
+      <span>counter: {count}</span>
+      <ul>
+        {tasks.map((task, index) => {
+          return (
+            <li key={index}>
+              {task}
+              <button
+                onClick={() => {
+                  setTasks(tasks.filter((a, i) => i !== index));
+                  setCount(count - 1);
+                }}
+              >
+                🗑️
+              </button>
+              <button
+                onClick={() => {
+                  setTasks(
+                    tasks.map((item, i) => (i === index ? <s>{task}</s> : item))
+                  );
+                  setCount(count - 1);
+                }}
+              >
+                {" "}
+                🚩{" "}
+              </button>
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
-}
+};
 
 export default App;

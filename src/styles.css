@@ -1,0 +1,12 @@
+.App {
+  background-color: white;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-size: 15px;
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-size: 15px;
+}
