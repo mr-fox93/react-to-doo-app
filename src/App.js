@@ -5,6 +5,7 @@ const App = () => {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState("");
   const [count, setCount] = useState(0);
+  const [time, setTime] = useState("");
 
   useEffect(() => {
     const x = localStorage.getItem("tasks");
@@ -15,6 +16,13 @@ const App = () => {
     if (y) {
       setCount(JSON.parse(y));
     }
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTime(currentDate());
+      return interval;
+    }, 1000);
   }, []);
 
   function currentDate() {
@@ -49,6 +57,7 @@ const App = () => {
   return (
     <div className="App">
       <input
+        className="input"
         type={"text"}
         placeholder={"add new task..."}
         value={newTask}
@@ -77,7 +86,10 @@ const App = () => {
       >
         Save to locale storage
       </button>
-      <span>counter: {count}</span>
+      <span className="counter">counter: {count}</span>
+      <span> </span>
+      <span className="timer">{time}</span>
+
       <ul>
         {tasks.map((task, index) => {
           return (
