@@ -39,6 +39,7 @@ const App = () => {
     const task = {
       text: newTask,
       created: currentDate(),
+      completed: false,
     };
     setTasks([...tasks, task]);
     setNewTask("");
@@ -81,7 +82,7 @@ const App = () => {
         {tasks.map((task, index) => {
           return (
             <li key={index}>
-              {task.text}
+              {task.completed ? <s>{task.text}</s> : task.text}
               <span> </span> {task.created}
               <button
                 onClick={() => {
@@ -94,7 +95,9 @@ const App = () => {
               <button
                 onClick={() => {
                   setTasks(
-                    tasks.map((item, i) => (i === index ? <s>{task}</s> : item))
+                    tasks.map((item, i) =>
+                      i === index ? { ...item, completed: true } : item
+                    )
                   );
                   setCount(count - 1);
                 }}
