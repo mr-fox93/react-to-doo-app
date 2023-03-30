@@ -17,6 +17,34 @@ const App = () => {
     }
   }, []);
 
+  function currentDate() {
+    const date = new Date();
+    const day =
+      date.getDate() +
+      "/" +
+      date.getMonth() +
+      "/" +
+      date.getFullYear() +
+      "/" +
+      date.getHours() +
+      ":" +
+      date.getMinutes() +
+      ":" +
+      date.getSeconds();
+    return day;
+    //console.log(day);
+  }
+
+  function addTask() {
+    const task = {
+      text: newTask,
+      created: currentDate(),
+    };
+    setTasks([...tasks, task]);
+    setNewTask("");
+    setCount(count + 1);
+  }
+
   return (
     <div className="App">
       <input
@@ -26,20 +54,11 @@ const App = () => {
         onChange={(event) => setNewTask(event.target.value)}
         onKeyDown={(event) => {
           if (event.key === "Enter") {
-            setTasks([...tasks, newTask], setNewTask(""));
-            setCount(count + 1);
+            addTask();
           }
         }}
       />
-      <button
-        onClick={() => {
-          setTasks([...tasks, newTask], setNewTask(""));
-          setCount(count + 1);
-        }}
-      >
-        {" "}
-        ➕{" "}
-      </button>
+      <button onClick={addTask}>➕</button>
       <button
         onClick={() => {
           setTasks([]);
@@ -62,7 +81,8 @@ const App = () => {
         {tasks.map((task, index) => {
           return (
             <li key={index}>
-              {task}
+              {task.text}
+              <span> </span> {task.created}
               <button
                 onClick={() => {
                   setTasks(tasks.filter((a, i) => i !== index));
